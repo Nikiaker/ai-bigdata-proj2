@@ -1,5 +1,3 @@
-apk add libstdc++
-
 ./kafka-topics.sh --create --bootstrap-server broker-1:19092 \
  --replication-factor 2 --partitions 3 --topic kafka-input
 
@@ -14,7 +12,7 @@ apk add libstdc++
 
 
 
-
+# Delete the kafka-input topic if it exists
 ./kafka-topics.sh --delete --bootstrap-server broker-1:19092 \
  --topic kafka-input
 
@@ -25,3 +23,10 @@ java -cp /opt/kafka/libs/*:datafaker-1.4.0.jar:netflix-prize-producer.jar \
 
 java -cp /opt/kafka/libs/*:netflix-prize-app.jar \
  com.example.bigdata.NetflixAnomalyDetection broker-1:19092 30 100 4.0 A
+
+
+/opt/kafka/bin/kafka-console-consumer.sh \
+  --bootstrap-server broker-1:19092,broker-2:19092 \
+  --topic kafka-input \
+  --property print.key=true \
+  --from-beginning

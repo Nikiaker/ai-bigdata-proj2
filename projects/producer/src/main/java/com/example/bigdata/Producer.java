@@ -47,9 +47,8 @@ public class Producer {
                     skip(Integer.parseInt(headerLength))) {
 // uzupełnij polecenie wysyłające komunikat do odpowiedniego
 // tematu Kafki. Do wskazania tematu użyj zmiennej topicName
-// Kluczem niech będzie wyrażenie String.valueOf(line.hashCode())
                 stream.forEach(line -> {
-                    ProducerRecord<String, String> record = new ProducerRecord<>(topicName, String.valueOf(line.hashCode()), line);
+                    ProducerRecord<String, String> record = new ProducerRecord<>(topicName, line);
                     producer.send(record);
                 });
                 TimeUnit.SECONDS.sleep(Integer.parseInt(sleepTime));

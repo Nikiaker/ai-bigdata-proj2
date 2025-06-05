@@ -108,4 +108,3 @@ services:
       KAFKA_CLUSTERS_0_NAME: local 
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker-1:19092,broker-2:19092,broker-3:19092
       KAFKA_CLUSTERS_0_PROPERTIES_SECURITYPROTOCOL: PLAINTEXT
-    restart: unless-stopped

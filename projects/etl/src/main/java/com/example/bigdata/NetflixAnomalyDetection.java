@@ -33,7 +33,7 @@ public class NetflixAnomalyDetection {
     }
 
     public static class MovieTitles {
-        public  int id;
+        public int id;
         public int year;
         public String title;
     }
@@ -82,11 +82,13 @@ public class NetflixAnomalyDetection {
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
         // Serdes for serializing and deserializing key and value from and to Kafka
+        final Serde<Void> voidSerde = Serdes.Void();
         final Serde<String> stringSerde = Serdes.String();
         final Serde<Integer> integerSerde = Serdes.Integer();
         final Serde<MovieStats> movieStatsSerde = new JsonPOJOSerde<>(MovieStats.class);
         final Serde<MovieTitles> movieTitlesSerde = new JsonPOJOSerde<>(MovieTitles.class);
         final Serde<MovieAlerts> movieAlertsSerde = new JsonPOJOSerde<>(MovieAlerts.class);
+        final Serde<InputScores> inputScoresSerde = new JsonPOJOSerde<>(InputScores.class);
         StreamsBuilder builder = new StreamsBuilder();
 
         // Creating the KTable for movie titles
@@ -122,7 +124,7 @@ public class NetflixAnomalyDetection {
 
         // Creating the KTable for movie stats
         KTable<Windowed<Integer>, MovieStats> movieStatsTable = movieStatsStream
-                .groupByKey()
+                .groupByKey(Grouped.with(integerSerde, stringSerde))
                 .windowedBy(TimeWindows.ofSizeWithNoGrace(Duration.ofDays(D)))
                 .aggregate(
                         () -> new MovieStats(),
@@ -159,7 +161,7 @@ public class NetflixAnomalyDetection {
                     return KeyValue.pair(value.film_id, movieAlert);
                 });
 
-        movieAlertsStream.to("movie-alerts", Produced.with(integerSerde,movieAlertsSerde));
+            movieAlertsStream.to("movie-alerts", Produced.with(integerSerde,movieAlertsSerde));
         }
 
         final Topology topology = builder.build();
