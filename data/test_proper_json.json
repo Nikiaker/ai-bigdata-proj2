@@ -1,0 +1,35 @@
+{
+    "schema": {
+        "type": "struct",
+        "optional": false,
+        "version": 1,
+        "fields": [
+            {
+                "field": "house",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "field": "person",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "field": "score",
+                "type": "int32",
+                "optional": true
+            },
+            {
+                "field": "ts",
+                "type": "string",
+                "optional": true
+            }
+        ]
+    },
+    "payload": {
+        "house": "Gryffindor",
+        "person": "Vernon Dursley",
+        "score": 8,
+        "ts": "2023-06-05 07:19:57.305"
+    }
+}

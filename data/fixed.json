@@ -1,0 +1,41 @@
+{
+    "schema": {
+        "type": "struct",
+        "optional": false,
+        "version": 1,
+        "fields": [
+            {
+                "field": "filmId",
+                "optional": true,
+                "type": "int32"
+            },
+            {
+                "field": "title",
+                "optional": true,
+                "type": "string"
+            },
+            {
+                "field": "count",
+                "optional": true,
+                "type": "int32"
+            },
+            {
+                "field": "sum",
+                "optional": true,
+                "type": "int32"
+            },
+            {
+                "field": "uniques",
+                "optional": true,
+                "type": "int32"
+            }
+        ]
+    },
+    "payload": {
+        "filmId": 14727,
+        "title": "UNKNOWN",
+        "count": 14,
+        "sum": 45,
+        "uniques": 14
+    }
+}

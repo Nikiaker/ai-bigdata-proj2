@@ -30,3 +30,29 @@ java -cp /opt/kafka/libs/*:netflix-prize-app.jar \
   --topic kafka-input \
   --property print.key=true \
   --from-beginning
+
+/opt/kafka/bin/kafka-console-consumer.sh \
+  --bootstrap-server broker-1:19092,broker-2:19092 \
+  --topic movie-titles \
+  --property print.key=true \
+  --from-beginning
+
+  # odczyt z tematu etl-monthly-stats
+/opt/kafka/bin/kafka-console-consumer.sh \
+  --bootstrap-server broker-1:19092,broker-2:19092 \
+  --topic etl-monthly-stats \
+  --from-beginning \
+  --property print.key=true \
+  --property value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+# odczyt z tematu movie-alerts
+/opt/kafka/bin/kafka-console-consumer.sh \
+  --bootstrap-server broker-1:19092,broker-2:19092 \
+  --topic movie-alerts \
+  --from-beginning \
+  --property print.key=true \
+  --property value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+./run_processing.sh 30 100 4.0 A
+./run_producer.sh 15
+./run_connector.sh
